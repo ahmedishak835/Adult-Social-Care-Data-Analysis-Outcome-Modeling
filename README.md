@@ -14,8 +14,6 @@ Visualization: Tableau (Interactive Dashboards)
 Key Questions & SQL Logic
 1. Total Spend by Ward
 Goal: Identify geographical areas with the highest financial requirements.
-
-SQL
 SELECT 
     ward, 
     SUM(weekly_cost_gbp) AS total_weekly_spend
@@ -25,12 +23,10 @@ GROUP BY
     ward
 ORDER BY 
     total_weekly_spend DESC;
-Insight: Highlights high-cost areas to help prioritize regional budget reviews.
+   Insight: Highlights high-cost areas to help prioritize regional budget reviews.
 
 2. Average Cost vs. Deprivation Decile
 Goal: Analyze the correlation between local deprivation (1 = Most Deprived, 10 = Least) and individual care costs.
-
-SQL
 SELECT 
     deprivation_decile, 
     AVG(weekly_cost_gbp) AS average_weekly_cost
@@ -40,12 +36,10 @@ GROUP BY
     deprivation_decile
 ORDER BY 
     deprivation_decile ASC;
-Insight: Determines if socioeconomic factors influence the "unit cost" of care per resident.
+   Insight: Determines if socioeconomic factors influence the "unit cost" of care per resident.
 
 3. Impact of Carer Support on Independence
 Goal: Evaluate if residents with carers achieve better independence outcomes.
-
-SQL
 SELECT 
     carer_flag, 
     outcome_improved_independence, 
@@ -57,7 +51,7 @@ GROUP BY
     outcome_improved_independence
 ORDER BY 
     carer_flag DESC;
-Insight: Provides a statistical breakdown of service effectiveness, comparing "Success Rates" between supported and non-supported residents.
+   Insight: Provides a statistical breakdown of service effectiveness, comparing "Success Rates" between supported and non-supported residents.
 
 Data Pipeline & Transformation
 Before visualization, I used Power Query to perform essential ETL tasks:
@@ -67,7 +61,6 @@ Data Cleaning: Handled null values and inconsistent naming conventions within th
 Type Casting: Formatted currency fields and ensured the deprivation_decile was treated as an ordinal dimension.
 
 Verification: Cross-referenced Power Query totals against SQL outputs to ensure 100% data integrity before importing into Tableau.
-
 Visualizations (Tableau)
 The final analysis was presented via an interactive dashboard featuring:
 
@@ -76,7 +69,6 @@ Ward Expenditure Map: A spatial view of total spending across the region.
 Deprivation Trend Line: A visualization showing the cost-per-person across the 1–10 decile range.
 
 Outcome Heatmap: A visual matrix showing the volume of residents achieving independence based on carer presence.
-
 Key Findings
 Carer Correlation: Residents with a recorded carer were significantly more likely to report "Improved Independence" compared to those without.
 

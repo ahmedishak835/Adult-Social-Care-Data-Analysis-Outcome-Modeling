@@ -1,75 +1,71 @@
-Adult Social Care: Financial & Outcome Analysis 📊
+Adult Social Care: Financial & Outcome Intelligence Suite 📊
 Project Overview
-This project analyzes a comprehensive Adult Social Care dataset to identify trends in council spending, the impact of regional deprivation, and the effectiveness of carer support. The objective was to transform raw administrative data into strategic insights that could inform budget allocation and service improvement.
+This project engineers a full-stack analytics pipeline to audit Adult Social Care (ASC) expenditure and service efficacy. By integrating SQL-driven extraction, Power Query ETL, and Tableau visualization, the analysis identifies high-variance spending zones and quantifies the impact of informal care on service user independence.
 
-I utilized a full-stack data approach: SQL for data extraction, Excel (Power Query) for ETL (Extract, Transform, Load), and Tableau for executive-level visualization.
+The objective was to transform raw administrative data into actionable business intelligence to optimize budget allocation and identify "crisis-entry" patterns in specific socio-economic demographics.
 
 Technical Stack
-Database: SQL (Data Aggregation & Analysis)
+Database: SQL (Data Normalization, Logical Modeling, & Aggregation)
 
-ETL Tool: Excel Power Query (Data Cleaning & Validation)
+ETL & Governance: Excel Power Query (Schema Standardization & Validation)
 
-Visualization: Tableau (Interactive Dashboards)
+BI & Visualization: Tableau (Interactive Executive Dashboards)
 
-Key Questions & SQL Logic
-1. Total Spend by Ward
-Goal: Identify geographical areas with the highest financial requirements.
-SELECT 
-    ward, 
-    SUM(weekly_cost_gbp) AS total_weekly_spend
-FROM 
-    care_data
-GROUP BY 
-    ward
-ORDER BY 
-    total_weekly_spend DESC;
-   Insight: Highlights high-cost areas to help prioritize regional budget reviews.
+1. Data Engineering & SQL Logic
+The raw data was extracted and modeled to isolate three primary KPIs: regional spend, socio-economic cost correlation, and carer effectiveness.
 
-2. Average Cost vs. Deprivation Decile
-Goal: Analyze the correlation between local deprivation (1 = Most Deprived, 10 = Least) and individual care costs.
-SELECT 
-    deprivation_decile, 
-    AVG(weekly_cost_gbp) AS average_weekly_cost
-FROM 
-    care_data
-GROUP BY 
-    deprivation_decile
-ORDER BY 
-    deprivation_decile ASC;
-   Insight: Determines if socioeconomic factors influence the "unit cost" of care per resident.
+A. Regional Expenditure Variance
+Identifies geographical "hotspots" to prioritize regional budget audits.
 
-3. Impact of Carer Support on Independence
-Goal: Evaluate if residents with carers achieve better independence outcomes.
-SELECT 
-    carer_flag, 
-    outcome_improved_independence, 
-    COUNT(person_id) AS resident_count
-FROM 
-    care_data
-GROUP BY 
-    carer_flag, 
-    outcome_improved_independence
-ORDER BY 
-    carer_flag DESC;
-   Insight: Provides a statistical breakdown of service effectiveness, comparing "Success Rates" between supported and non-supported residents.
+SQL
+SELECT ward, SUM(weekly_cost_gbp) AS total_weekly_spend 
+FROM care_data 
+GROUP BY ward 
+ORDER BY total_weekly_spend DESC;
+B. Socio-Economic Cost Correlation
+Analyzes the "unit cost" of care relative to the Index of Multiple Deprivation (IMD).
 
-Data Pipeline & Transformation
-Before visualization, I used Power Query to perform essential ETL tasks:
+SQL
+SELECT deprivation_decile, AVG(weekly_cost_gbp) AS average_weekly_cost 
+FROM care_data 
+GROUP BY deprivation_decile 
+ORDER BY deprivation_decile ASC;
+C. Outcome Efficacy Matrix
+Quantifies the success rate of independence outcomes based on carer presence.
 
-Data Cleaning: Handled null values and inconsistent naming conventions within the ward column.
+SQL
+SELECT carer_flag, outcome_improved_independence, COUNT(person_id) AS resident_count 
+FROM care_data 
+GROUP BY carer_flag, outcome_improved_independence 
+ORDER BY resident_count DESC;
+2. ETL Pipeline & Data Governance
+Before visualization, data underwent a rigorous ETL process in Power Query to ensure a "Single Version of Truth" (SVOT):
 
-Type Casting: Formatted currency fields and ensured the deprivation_decile was treated as an ordinal dimension.
+Categorical Normalization: Consolidated 12+ fragmented string variations of "Independence Outcomes" into a standardized 3-tier ordinal scale (Yes | Partial | No).
 
-Verification: Cross-referenced Power Query totals against SQL outputs to ensure 100% data integrity before importing into Tableau.
-Visualizations (Tableau)
-The final analysis was presented via an interactive dashboard featuring:
+Type Casting: Cast Deprivation_Decile as an integer to allow for continuous trend-line slope analysis.
 
-Ward Expenditure Map: A spatial view of total spending across the region.
+Integrity Validation: Performed row-count and grand-total cross-checks against raw SQL outputs to verify zero data loss during ingestion.
 
-Deprivation Trend Line: A visualization showing the cost-per-person across the 1–10 decile range.
+3. Interactive Visualization (Tableau)
+The dashboard provides an executive-level overview of the care landscape:
 
-Outcome Heatmap: A visual matrix showing the volume of residents achieving independence based on carer presence.
-Key Findings
-Carer Correlation: Residents with a recorded carer were significantly more likely to report "Improved Independence" compared to those without.
+Geographical Expenditure Map: A spatial audit of total spending across wards.
 
-Deprivation Impact: Average weekly costs showed a distinct trend relative to deprivation deciles, suggesting that higher-deprivation areas require more complex, higher-cost care packages.
+Deprivation Trend Analysis: A visualization of average weekly costs across the 1–10 decile range.
+
+Outcome Heatmap: A matrix correlating carer support with independence success rates.
+
+4. Key Strategic Findings
+The "Hazel Grove" Outlier: Identified a significant financial concentration in Hazel Grove (£9,045/week), triggering a recommendation for a provider-rate audit.
+
+The Decile 7 Paradox: Costs do not scale linearly with poverty; a significant peak occurs at Decile 7 (£819 avg), suggesting middle-income residents enter the system at "crisis points" rather than through preventative care.
+
+Carer ROI: Residents with recorded carers demonstrated a statistically higher likelihood of achieving improved independence, providing a fiscal evidence base for continued Carer Support Grants.
+
+5. Future Roadmap
+Live Integration: Transition from static flat-files to a live SQL Server connection.
+
+Predictive Modeling: Utilize historical spend data to forecast 2026/27 budget requirements.
+
+Data Quality: Implement CRM field validation to eliminate the 22% reporting gap in carer status documentation.

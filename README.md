@@ -1,3 +1,4 @@
+<img width="1657" height="851" alt="Adult Social Care Financial   Outcomes" src="https://github.com/user-attachments/assets/c6557aca-6598-4600-a4ab-7c134d17f616" />
 Adult Social Care: Financial & Outcome Intelligence Suite 📊
 Project Overview
 This project engineers a full-stack analytics pipeline to audit Adult Social Care (ASC) expenditure and service efficacy. By integrating SQL-driven extraction, Power Query ETL, and Tableau visualization, the analysis identifies high-variance spending zones and quantifies the impact of informal care on service user independence.

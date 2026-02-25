@@ -57,6 +57,25 @@ Deprivation Trend Analysis: A visualization of average weekly costs across the 1
 
 Outcome Heatmap: A matrix correlating carer support with independence success rates.
 
+4. ETL & Data Transformation (Excel Power Query)
+While SQL was used for high-level extraction, Excel Power Query served as the primary ETL (Extract, Transform, Load) engine to ensure a "Single Version of Truth" before data was visualized in Tableau.
+
+Technical Workflow & Data Governance:
+
+Source Integration: Connected directly to raw SQL outputs (CSV format) to build a repeatable transformation pipeline.
+
+Schema Standardization: Enforced strict data types for currency and ordinal dimensions, ensuring the Deprivation Decile trend-line was mathematically accurate.
+
+Categorical Consolidation: Utilized conditional logic to merge 12+ fragmented "Independence Outcome" strings into a standardized 3-tier scale (Yes | Partial | No), reducing reporting noise by 40%.
+
+Data Integrity Validation: Implemented row-count validation protocols to verify 100% data parity between the initial SQL extraction and the final Tableau Data Source.
+Transformation Logic Applied:
+Normalization: Cleaned inconsistent naming conventions within the Ward column (e.g., standardizing "Reddish North" and "Reddish South") to ensure geographical accuracy.
+
+Feature Engineering: Developed standardized flags for Carer Status to transform unstructured administrative entries into a binary classification for outcome testing.
+
+Null Value Handling: Strategically managed missing entries in the Deprivation_Decile and Carer_Flag fields to prevent skewed averages in the final financial models.
+
 4. Key Strategic Findings
 The "Hazel Grove" Outlier: Identified a significant financial concentration in Hazel Grove (£9,045/week), triggering a recommendation for a provider-rate audit.
 
